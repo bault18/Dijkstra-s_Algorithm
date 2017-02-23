@@ -8,7 +8,9 @@ using std::cin;
 using std::cout;
 using std::endl;
 
+int initial_state = 0;
 int goal_state = 13;
+
 
 struct node {
 	node() {};
@@ -71,6 +73,7 @@ int main()
 		matrix.push_back(temp);
 	}
 
+	//Create adjacency matrix
 	int from, to;
 	double dist;
 	for (int i = 0; i < edge; i++)
@@ -84,8 +87,10 @@ int main()
 	std::priority_queue<node> paths;
 	std::set<int> visited_nodes;
 
-	//initial state
-	node initial(0, 0, std::list<int>{ 0 });
+	//initial state (change the first number to your )
+	node initial(initial_state, 0, std::list<int>{ initial_state });
+	paths.push(initial);
+
 	while (true)
 	{
 		if (paths.empty()) {
@@ -104,7 +109,7 @@ int main()
 			break;
 		}
 
-		if (visited_nodes.find(current.state) != visited_nodes.end()) {
+		if (visited_nodes.find(current.state) == visited_nodes.end()) {
 			visited_nodes.insert(current.state);
 
 			std::vector<int> children = getChildren(current.state, matrix);
